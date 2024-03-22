@@ -1,5 +1,7 @@
+
 import { Bell } from "lucide-react";
 import Avatar from "../stream/Avatar";
+
 import ViewsAmount from "./ViewsAmount";
 
 export default function Channels() {
