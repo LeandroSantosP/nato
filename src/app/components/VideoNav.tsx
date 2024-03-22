@@ -1,9 +1,9 @@
-"use client";
+"use client"
 
 import { useState } from "react";
 import LinkButton from "./LinkButton";
 
-export default function VideoDescription() {
+export default function VideoNav(props: { home: { description: string } }) {
   const [page, setPage] = useState<String>("about");
 
   const handlePage = (target: string) => {
@@ -18,7 +18,6 @@ export default function VideoDescription() {
     op[target]();
   };
 
-  var s = "border-gray-100";
   return (
     <section className="min-h-80">
       <nav className={`flex border-b-[1px] gap-3 border-gray-100`}>
@@ -41,10 +40,7 @@ export default function VideoDescription() {
         <div>
           <h1>Home</h1>
           <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempora
-            quae placeat quas rem voluptatem. Veniam perferendis iste vitae
-            sequi laudantium natus assumenda unde excepturi inventore
-            distinctio? Eos suscipit id consequatur?
+            {props.home.description}
           </p>
         </div>
       )}

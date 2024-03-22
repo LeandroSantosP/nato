@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "server": "npx json-server -p 4000 db.json"
   },
   "dependencies": {
     "lucide-react": "^0.359.0",

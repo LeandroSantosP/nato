@@ -1,7 +1,7 @@
-"use client";
 
 import VideoStreamSection from "../components/VideoStreamSection";
 import Channels from "../components/Channels";
+
 export default function Stream() {
   return (
     <main className="space-y-0.5 flex h-screen flex-col p-2">

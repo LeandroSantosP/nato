@@ -1,0 +1,16 @@
+{
+	"profile": [
+		{
+			"id": 1,
+			"username": "JohnDoe",
+			"avatarUrl": "https://i.imgur.com/yDG1S2F.png",
+			"description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo nisi doloremque officiis rerum temporibus tempora"
+		},
+		{
+			"id": 2,
+			"username": "Maria",
+			"avatarUrl": "https://i.imgur.com/a3a7lbR.png",
+			"description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo nisi doloremque officiis rerum temporibus tempora"
+		}
+	]
+}
