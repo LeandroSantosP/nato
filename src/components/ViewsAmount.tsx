@@ -22,7 +22,7 @@ const vi = tv({
 
 export interface ViesProps
   extends ComponentProps<"div">,
-    VariantProps<typeof vi> {
+  VariantProps<typeof vi> {
   content?: string;
   btSize?: number;
 }
@@ -37,7 +37,7 @@ export default function ViewsAmount({
 }: ViesProps) {
   return (
     <div className={vi({ className, variant, size, ...props })}>
-      <Eye className="text-my-green-two font-bold" size={btSize} />
+      <Eye className="text-emerald-400 font-bold" size={btSize} />
       {content}
     </div>
   );

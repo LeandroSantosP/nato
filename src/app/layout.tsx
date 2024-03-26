@@ -1,6 +1,12 @@
 import type { Metadata } from "next";
 import { Mandali } from "next/font/google";
 import "./globals.css";
+import { ReactClientQueryProvider } from "../components/ReactClientQueryProvider";
+import { cn } from "@/lib/utils";
+import Window from "@/components/Window";
+import Channels from "@/components/Channels";
+import { CounterStoreProvider } from "@/providers/CountStorageProvider";
+import { CategoriesStorageProvider } from "@/providers/CategoriesStorageProvider";
 
 const mandali = Mandali({
   subsets: ["latin"],
@@ -8,6 +14,7 @@ const mandali = Mandali({
   style: "normal",
   display: "swap"
 });
+
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -19,9 +26,21 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
   return (
-    <html lang="en">
-      <body className={mandali.className}>{children}</body>
-    </html>
+    <ReactClientQueryProvider>
+      <html lang="en">
+        <CategoriesStorageProvider>
+          <CounterStoreProvider>
+            <body className={cn("h-screen max-w-[1980px] flex m-auto bg-my-gray-dark antialiased text-zinc-100", mandali.className)}>
+              <Window>
+                <Channels />
+              </Window>
+              {children}
+            </body>
+          </CounterStoreProvider>
+        </CategoriesStorageProvider>
+      </html>
+    </ReactClientQueryProvider >
   );
 }

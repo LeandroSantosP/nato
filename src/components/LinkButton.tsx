@@ -5,7 +5,7 @@ const LinkBu = tv({
   base: "flex gap-1 cursor-pointer hover:bg-zinc-700/80 p-1 rounded font-semibold items-center justify-center text-[0.7rem]",
   variants: {
     variant: {
-      active: "text-lg text-my-green-two",
+      active: "text-lg text-emerald-400",
       default: "text-lg"
     },
     size: {
@@ -20,7 +20,7 @@ const LinkBu = tv({
 });
 interface LinkButtonProps
   extends ComponentProps<"a">,
-    VariantProps<typeof LinkBu> {
+  VariantProps<typeof LinkBu> {
   content: string;
 }
 

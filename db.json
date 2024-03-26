@@ -12,5 +12,57 @@
 			"avatarUrl": "https://i.imgur.com/a3a7lbR.png",
 			"description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo nisi doloremque officiis rerum temporibus tempora"
 		}
+	],
+	"categories": [
+		{
+			"id": "5ed20ac6-c0c7-40cc-8bad-f2241207000d",
+			"name": "all",
+			"videos": [
+				{
+					"id": "f06917b4-25e9-445d-bdd5-10b92c701169",
+					"title": "Best ways to learning English - FREE",
+					"authorId": 1,
+					"type": "free",
+					"thumbnailUrl": "https://i.ytimg.com/vi/XzJ1WnFTVds/maxresdefault.jpg",
+					"createdAt": "2024-03-24T20:03:22"
+				},
+				{
+					"id": "2179be75-9509-4831-9473-3ce1c27a67fa",
+					"title": "Best ways to learning English - SUBS",
+					"type": "paid",
+					"thumbnailUrl": "https://kajabi-storefronts-production.kajabi-cdn.com/kajabi-storefronts-production/themes/498652/settings_images/oEJ9dIeoRe2yBD6WDPQL_thumbnails-checklist.jpg",
+					"authorId": 1,
+					"createdAt": "2024-03-24T20:03:22"
+				}
+			]
+		},
+		{
+			"id": "1814c2a8-61f1-4aff-bd61-d95e94786586",
+			"name": "free",
+			"videos": [
+				{
+					"id": "f06917b4-25e9-445d-bdd5-10b92c701169",
+					"title": "Best ways to learning English - FREE",
+					"authorId": 1,
+					"type": "free",
+					"thumbnailUrl": "https://i.ytimg.com/vi/XzJ1WnFTVds/maxresdefault.jpg",
+					"createdAt": "2024-03-24T20:03:22"
+				}
+			]
+		},
+		{
+			"id": "03cb0925-9ccd-44cc-82b7-1dedc881e9f3",
+			"name": "subs",
+			"videos": [
+				{
+					"id": "2179be75-9509-4831-9473-3ce1c27a67fa",
+					"title": "Best ways to learning English - SUBS",
+					"authorId": 1,
+					"type": "paid",
+					"thumbnailUrl": "https://kajabi-storefronts-production.kajabi-cdn.com/kajabi-storefronts-production/themes/498652/settings_images/oEJ9dIeoRe2yBD6WDPQL_thumbnails-checklist.jpg",
+					"createdAt": "2024-03-24T20:03:22"
+				}
+			]
+		}
 	]
 }

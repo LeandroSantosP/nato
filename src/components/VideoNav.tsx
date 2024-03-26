@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import LinkButton from "./LinkButton";
+import { Button } from "./ui/button";
 
 export default function VideoNav(props: { home: { description: string } }) {
   const [page, setPage] = useState<String>("about");
@@ -22,14 +23,15 @@ export default function VideoNav(props: { home: { description: string } }) {
     <section className="min-h-80">
       <nav className={`flex border-b-[1px] gap-3 border-gray-100`}>
         <LinkButton
-          content="Home"
+          content="HOME"
           variant={`${page === "home" ? "active" : "default"}`}
           onClick={() => {
             handlePage("home");
           }}
         />
+
         <LinkButton
-          content="About"
+          content="ABOUT"
           variant={`${page === "home" ? "default" : "active"}`}
           onClick={() => {
             handlePage("about");
