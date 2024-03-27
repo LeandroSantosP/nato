@@ -1,19 +1,35 @@
 "use client"
 
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { AvatarFallback, AvatarImage, Avatar } from "./ui/avatar";
 import Link from "next/link";
-import { useCategoriesStore } from "@/providers/CategoriesStorageProvider";
 import { useQuery } from "react-query";
-import { get_categories } from "@/api/categories";
+import { get_categories_by_name } from "@/api/categories";
 import { Button } from "./ui/button";
 
 export default function Channels() {
-  const { getCategoriesByName, categories } = useCategoriesStore((state) => state);
+  const searchParams = useSearchParams();
+  const { replace } = useRouter();
+  const pathname = usePathname();
   const { data } = useQuery({
     queryKey: "category",
-    queryFn: get_categories
+    queryFn: () => get_categories_by_name({})
   });
+
+  function setSearchCategoryOnUrl(value: string) {
+    const params = new URLSearchParams(searchParams);
+    const current = params.get("category_name");
+    params.delete("video_title")
+    if (value) {
+      params.set("category_name", value)
+    } else {
+      params.delete("category_name")
+    }
+    if (current == value) {
+      params.delete("category_name", value);
+    }
+    replace(`${pathname}?${params.toString()}`);
+  }
 
   const currentPage = usePathname()
   return (
@@ -51,9 +67,9 @@ export default function Channels() {
             data?.map(category => {
               return (
                 <Button
-                  onClick={() => getCategoriesByName(category.name)}
+                  onClick={() => setSearchCategoryOnUrl(category.name)}
                   key={category.id}
-                  className={`flex items-center ${categories[0]?.id == category.id && "bg-emerald-400 text-zinc-900 hover:text-zinc-100"} p-2 rounded border border-my-gray-01 transition-all hover:cursor-pointer hover:bg-zinc-900`}
+                  className={`flex items-center ${searchParams.get("category_name") == category.name && "bg-emerald-400 text-zinc-900 hover:text-zinc-100"} p-2 rounded border border-my-gray-01 transition-all hover:cursor-pointer hover:bg-zinc-900`}
                 >
                   {category.name.charAt(0).toUpperCase() + category.name.slice(1)}
                 </Button>

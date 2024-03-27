@@ -7,6 +7,9 @@ const nextConfig = {
 			hostname: "i.ytimg.com"
 		}, {
 			hostname: "kajabi-storefronts-production.kajabi-cdn.com"
+		},
+		{
+			hostname: "t3.ftcdn.net"
 		}]
 	}
 };

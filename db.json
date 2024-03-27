@@ -20,7 +20,7 @@
 			"videos": [
 				{
 					"id": "f06917b4-25e9-445d-bdd5-10b92c701169",
-					"title": "Best ways to learning English - FREE",
+					"title": "Search Filter in React JS - Filter Through Results - FREE",
 					"authorId": 1,
 					"type": "free",
 					"thumbnailUrl": "https://i.ytimg.com/vi/XzJ1WnFTVds/maxresdefault.jpg",
@@ -33,6 +33,14 @@
 					"thumbnailUrl": "https://kajabi-storefronts-production.kajabi-cdn.com/kajabi-storefronts-production/themes/498652/settings_images/oEJ9dIeoRe2yBD6WDPQL_thumbnails-checklist.jpg",
 					"authorId": 1,
 					"createdAt": "2024-03-24T20:03:22"
+				},
+				{
+					"id": "c1cbc756-72f5-4c24-a3dd-736530ab9085",
+					"title": "Vismes selection of free thumbnail templates - FREE",
+					"type": "free",
+					"thumbnailUrl": "https://t3.ftcdn.net/jpg/05/85/86/44/360_F_585864419_kgIYUcDQ0yiLOCo1aRjeu7kRxndcoitz.jpg",
+					"authorId": 1,
+					"createdAt": "2024-03-24T20:03:22"
 				}
 			]
 		},
@@ -42,10 +50,18 @@
 			"videos": [
 				{
 					"id": "f06917b4-25e9-445d-bdd5-10b92c701169",
-					"title": "Best ways to learning English - FREE",
+					"title": "Search Filter in React JS - Filter Through Results - FREE",
 					"authorId": 1,
 					"type": "free",
 					"thumbnailUrl": "https://i.ytimg.com/vi/XzJ1WnFTVds/maxresdefault.jpg",
+					"createdAt": "2024-03-24T20:03:22"
+				},
+				{
+					"id": "c1cbc756-72f5-4c24-a3dd-736530ab9085",
+					"title": "Vismes selection of free thumbnail templates - FREE",
+					"type": "free",
+					"thumbnailUrl": "https://t3.ftcdn.net/jpg/05/85/86/44/360_F_585864419_kgIYUcDQ0yiLOCo1aRjeu7kRxndcoitz.jpg",
+					"authorId": 1,
 					"createdAt": "2024-03-24T20:03:22"
 				}
 			]
