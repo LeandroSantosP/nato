@@ -7,6 +7,10 @@ import { useQuery } from "react-query";
 import { get_categories_by_name } from "@/api/categories";
 import { Button } from "./ui/button";
 
+
+import { LogInForm } from "./LogInForm";
+import { SignUpForm } from "./SignUpForm";
+
 export default function Channels() {
   const searchParams = useSearchParams();
   const { replace } = useRouter();
@@ -17,8 +21,10 @@ export default function Channels() {
   });
 
   function setSearchCategoryOnUrl(value: string) {
+
     const params = new URLSearchParams(searchParams);
     const current = params.get("category_name");
+
     params.delete("video_title")
     if (value) {
       params.set("category_name", value)
@@ -30,32 +36,43 @@ export default function Channels() {
     }
     replace(`${pathname}?${params.toString()}`);
   }
+  const currentPage = usePathname();
+  const isLogged = false;
 
-  const currentPage = usePathname()
   return (
     <section className="flex min-w-52 p-2 gap-2 flex-col h-full min-h-44 rounded-lg bg-zinc-950 border-my-gray-01 border">
-      <header className="flex justify-between p-2 gap-2 text-xs px-3 items-center border-[1px] border-my-gray-01 mb-3 rounded">
-        <h1 className="text-sm">Nato</h1>
-        <div className="flex items-center gap-2">
-          <p className="text-[0.7rem]">John doe</p>
-          <Avatar className="size-7">
-            <AvatarImage src={"https://i.imgur.com/eHJNhfo.png"} />
-            <AvatarFallback>CN</AvatarFallback>
-          </Avatar>
-        </div>
-      </header>
+      {isLogged ? (
+        <header className="flex justify-between p-2 gap-2 text-xs px-3 items-center border-[1px] border-my-gray-01 mb-3 rounded">
+          <h1 className="text-sm">Nato</h1>
+          <div className="flex items-center gap-2">
+            <p className="text-[0.7rem]">John doe</p>
+            <Avatar className="size-7">
+              <AvatarImage src={"https://i.imgur.com/eHJNhfo.png"} />
+              <AvatarFallback>CN</AvatarFallback>
+            </Avatar>
+          </div>
+        </header>
+      ) : (
+        <header className="flex flex-col justify-between p-2 gap-2 text-xs px-3 items-center border-[1px] border-my-gray-01 mb-3 rounded">
+          <LogInForm />
+          <SignUpForm />
+        </header>
+      )}
+
       <div className="flex flex-col gap-2">
+        {isLogged && (
+          <Link
+            href="/contents"
+            className="p-2 rounded bg-primary text-zinc-100 shadow hover:bg-primary/90 border  text-sm font-medium w-full border-my-gray-01"
+          >
+            Content
+          </Link>
+        )}
         <Link
-          href="/contents"
-          className="p-2 rounded bg-my-gray-light-two border  text-sm font-medium w-full border-my-gray-01"
+          href="/live"
+          className={`p-2 rounded bg-primary text-zinc-100 shadow hover:bg-primary/90 border text-sm font-medium w-full border-my-gray-01`}
         >
-          Content
-        </Link>
-        <Link
-          href="/stream"
-          className="p-2 rounded bg-my-gray-light-two border text-sm font-medium w-full border-my-gray-01"
-        >
-          Stream
+          Live
         </Link>
       </div>
       {currentPage == "/contents" && data && (

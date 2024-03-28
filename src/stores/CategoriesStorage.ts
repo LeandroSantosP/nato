@@ -40,8 +40,8 @@ export const createCategoriesStorage = (
         return;
       }
       set(() => ({ isLoading: true }));
-      let categories = await get_categories_by_name({ name });
-      set(() => ({ categories: [categories] }));
+      let categories = await get_categories_by_name({ category_name: name });
+      set(() => ({ categories: categories }));
       set(() => ({ isLoading: false }));
     }
   }));

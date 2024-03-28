@@ -2,10 +2,9 @@
 
 import { useState } from "react";
 import LinkButton from "./LinkButton";
-import { Button } from "./ui/button";
 
 export default function VideoNav(props: { home: { description: string } }) {
-  const [page, setPage] = useState<String>("about");
+  const [page, setPage] = useState<String>("home");
 
   const handlePage = (target: string) => {
     const op = {

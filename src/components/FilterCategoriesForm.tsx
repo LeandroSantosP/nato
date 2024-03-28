@@ -6,10 +6,11 @@ import { Input } from "./ui/input";
 import { useForm, SubmitHandler } from "react-hook-form"
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod"
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "./ui/tooltip";
 
 const categoriesFilterSchema = z.object({
-	category_name: z.string(),
-	video_title: z.string()
+	category_name: z.string().toLowerCase(),
+	video_title: z.string().toLowerCase()
 });
 
 type CategoriesFilterSchema = z.infer<typeof categoriesFilterSchema>
@@ -53,11 +54,21 @@ export function FilterCategoriesForm() {
 				placeholder="Search for video title..."
 				defaultValue={searchParams.get("video_title")?.toString() || ""}
 			/>
-			<Button
-				type="submit"
-				className={`flex items-center p-2 rounded border border-my-gray-01 transition-all hover:cursor-pointer hover:bg-zinc-900`}>
-				<Search className="text-zinc-400" />
-			</Button>
+			<TooltipProvider>
+				<Tooltip delayDuration={0}>
+					<TooltipTrigger asChild>
+						<Button
+							type="submit"
+							className={`flex items-center p-2 rounded border border-my-gray-01 transition-all hover:cursor-pointer hover:bg-zinc-900`}>
+							<Search className="text-zinc-400" />
+						</Button>
+					</TooltipTrigger>
+					<TooltipContent>
+						<p>Search...</p>
+					</TooltipContent>
+				</Tooltip>
+			</TooltipProvider>
+
 		</form>
 	)
 }

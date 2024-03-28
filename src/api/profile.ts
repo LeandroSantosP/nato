@@ -1,9 +1,10 @@
 export const BASE_URL = "http://localhost:4000";
 
-type ProfileResponse = {
+export type UserProfile = {
   id: string;
   username: string;
   avatarUrl: string;
+  email: string;
   description: string;
 };
 
@@ -12,7 +13,7 @@ type ProfileResponse = {
 export const get_profile = (user_id: string) =>
   fetch(BASE_URL + `/profile?id=${user_id}`, {
     cache: "no-cache"
-  }).then<ProfileResponse>(async (res) => {
+  }).then<UserProfile>(async (res) => {
     await delay(10000);
     let profiles = await res.json();
     return profiles[0];

@@ -8,7 +8,6 @@ import FollowButton from "./FollowButton";
 import { useQuery } from "react-query";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import SkeletonVideoDesc from "./skeletons/SkeletonVideoDesc";
-import { Skeleton } from "./ui/skeleton";
 
 export default function VideoDesc() {
 	const { data: profile, isLoading } = useQuery({
