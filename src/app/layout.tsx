@@ -8,6 +8,7 @@ import Channels from "@/components/Channels";
 import { CounterStoreProvider } from "@/providers/CountStorageProvider";
 import { CategoriesStorageProvider } from "@/providers/CategoriesStorageProvider";
 import { ProfileStorageProvider } from "@/providers/ProfileStorageProvider";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 const mandali = Mandali({
   subsets: ["latin"],
@@ -28,9 +29,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
 
+  const queryClient = new QueryClient();
   return (
-    <ReactClientQueryProvider>
-      <html lang="en">
+    <html lang="en">
+      <ReactClientQueryProvider>
         <ProfileStorageProvider>
           <CategoriesStorageProvider>
             <CounterStoreProvider>
@@ -43,8 +45,7 @@ export default function RootLayout({
             </CounterStoreProvider>
           </CategoriesStorageProvider>
         </ProfileStorageProvider>
-
-      </html>
-    </ReactClientQueryProvider >
+      </ReactClientQueryProvider >
+    </html>
   );
 }

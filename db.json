@@ -4,14 +4,25 @@
 			"id": 1,
 			"username": "JohnDoe",
 			"email": "joeDoe@gmail.com",
-			"avatarUrl": "https://i.imgur.com/yDG1S2F.png",
+			"avatarUrls": [
+				"https://i.imgur.com/yDG1S2F.png"
+			],
+			"roles": [
+				"USER",
+				"ADMIN"
+			],
 			"description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo nisi doloremque officiis rerum temporibus tempora"
 		},
 		{
 			"id": 2,
 			"username": "Maria",
 			"email": "joeDoe@gmail.com",
-			"avatarUrl": "https://i.imgur.com/a3a7lbR.png",
+			"avatarUrls": [
+				"https://i.imgur.com/a3a7lbR.png"
+			],
+			"roles": [
+				"USER"
+			],
 			"description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo nisi doloremque officiis rerum temporibus tempora"
 		}
 	],

@@ -6,23 +6,29 @@ import Link from "next/link";
 import { useQuery } from "react-query";
 import { get_categories_by_name } from "@/api/categories";
 import { Button } from "./ui/button";
-
-
 import { LogInForm } from "./LogInForm";
 import { SignUpForm } from "./SignUpForm";
-import { get_profile } from "@/api/profile";
+import { get_profile_fake } from "@/api/profile";
+import { getCookie } from "@/utils/cookies";
+import SkeletonLoadingProfileHeader from "./skeletons/SkeletonLoadingProfileHeader";
 
 export default function Channels() {
   const searchParams = useSearchParams();
   const { replace } = useRouter();
   const pathname = usePathname();
+  const token = getCookie("token");
 
-  const { data: userData } = useQuery({
-    queryKey: ["profile"],
-    queryFn: get_profile
+  const { data: profile, isLoading } = useQuery({
+    queryKey: ["profile", token],
+    queryFn: () => {
+      if (!token) {
+        return
+      }
+      return get_profile_fake(token)
+    }
   });
 
-  const { data } = useQuery({
+  const { data: categories } = useQuery({
     queryKey: "category",
     queryFn: () => get_categories_by_name({})
   });
@@ -43,18 +49,19 @@ export default function Channels() {
     }
     replace(`${pathname}?${params.toString()}`);
   }
+
   const currentPage = usePathname();
   const isLogged = false;
-
   return (
     <section className="flex min-w-52 p-2 gap-2 flex-col h-full min-h-44 rounded-lg bg-zinc-950 border-my-gray-01 border">
-      {isLogged ? (
+
+      {isLoading ? <SkeletonLoadingProfileHeader /> : profile ? (
         <header className="flex justify-between p-2 gap-2 text-xs px-3 items-center border-[1px] border-my-gray-01 mb-3 rounded">
           <h1 className="text-sm">Nato</h1>
           <div className="flex items-center gap-2">
-            <p className="text-[0.7rem]">John doe</p>
+            <p className="text-[0.7rem]">{profile.username}</p>
             <Avatar className="size-7">
-              <AvatarImage src={"https://i.imgur.com/eHJNhfo.png"} />
+              <AvatarImage src={profile.avatarUrls[0]} />
               <AvatarFallback>CN</AvatarFallback>
             </Avatar>
           </div>
@@ -65,7 +72,6 @@ export default function Channels() {
           <SignUpForm />
         </header>
       )}
-
       <div className="flex flex-col gap-2">
         {isLogged && (
           <Link
@@ -82,13 +88,13 @@ export default function Channels() {
           Live
         </Link>
       </div>
-      {currentPage == "/contents" && data && (
+      {currentPage == "/contents" && (
         <div className="flex flex-col gap-2">
           <h2 className={`font-bold border-b-[1px] border-zinc-700`}>
             Categories
           </h2>
           {
-            data?.map(category => {
+            categories?.map(category => {
               return (
                 <Button
                   onClick={() => setSearchCategoryOnUrl(category.name)}
@@ -101,8 +107,7 @@ export default function Channels() {
             })
           }
         </div >
-      )
-      }
+      )}
       <div className="flex flex-col w-full gap-2 scrollbar overflow-auto scrollbar-none">
         <h2 className="font-bold border-b-[1px] border-zinc-700">
           Following

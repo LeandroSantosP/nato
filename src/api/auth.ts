@@ -18,3 +18,9 @@ export async function signIn({ email, password }: SignInInput) {
     return await response.json();
   });
 }
+
+export async function signInFake({ email, password }: SignInInput) {
+  return { token: "my_fake_token" };
+}
+
+export async function logOut(token: string) {}

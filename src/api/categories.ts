@@ -1,4 +1,4 @@
-import { BASE_URL, delay } from "./profile";
+import { BASE_URL_J_SERVER, delay } from "./profile";
 
 export type GetCategoriesResponse = {
   id: string;
@@ -20,9 +20,12 @@ export const get_categories_by_name = ({
   category_name?: string;
   video_title?: string;
 }) => {
-  return fetch(BASE_URL + "/categories?name=" + (category_name ?? ""), {
-    cache: "no-cache"
-  }).then<GetCategoriesResponse[]>(async (res) => {
+  return fetch(
+    BASE_URL_J_SERVER + "/categories?name=" + (category_name ?? ""),
+    {
+      cache: "no-cache"
+    }
+  ).then<GetCategoriesResponse[]>(async (res) => {
     await delay(3000);
     let output: GetCategoriesResponse[] = await res.json();
 
@@ -51,7 +54,7 @@ export const get_categories_by_name = ({
 };
 
 export const get_categories = () => {
-  return fetch(BASE_URL + "/categories", {
+  return fetch(BASE_URL_J_SERVER + "/categories", {
     cache: "no-cache"
   }).then<GetCategoriesResponse[]>(async (res) => {
     await delay(3000);

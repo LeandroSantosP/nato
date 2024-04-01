@@ -14,10 +14,11 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
 import { useForm } from "react-hook-form"
 import { useMutation, useQuery } from "react-query"
-import { signIn } from "@/api/auth"
+import { signInFake } from "@/api/auth"
 import { useRouter } from "next/navigation"
-import { getCookie, setCookie } from "@/utils/cookies"
+import { setCookie } from "@/utils/cookies"
 import ErrorFormMessage from "./ErroFormMessage"
+import { useQueryClient } from "react-query"
 
 
 const signInFilterSchema = z.object({
@@ -28,13 +29,16 @@ const signInFilterSchema = z.object({
 type SigInFilterSchema = z.infer<typeof signInFilterSchema>
 
 export function LogInForm() {
+	const useQuery = useQueryClient();
 	const { refresh } = useRouter();
 	const { register, handleSubmit, formState: { errors } } = useForm<SigInFilterSchema>({
 		resolver: zodResolver(signInFilterSchema)
 	});
 	const { isLoading, mutateAsync: signInFn } = useMutation({
-		mutationFn: signIn,
-		mutationKey: ["profile"]
+		mutationFn: signInFake,
+		onSuccess(data, variables, context) {
+			useQuery.invalidateQueries("profile")
+		},
 	});
 
 	async function handleLoginForm({ email, password }: SigInFilterSchema) {
