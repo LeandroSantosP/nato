@@ -10,11 +10,18 @@ import { Button } from "./ui/button";
 
 import { LogInForm } from "./LogInForm";
 import { SignUpForm } from "./SignUpForm";
+import { get_profile } from "@/api/profile";
 
 export default function Channels() {
   const searchParams = useSearchParams();
   const { replace } = useRouter();
   const pathname = usePathname();
+
+  const { data: userData } = useQuery({
+    queryKey: ["profile"],
+    queryFn: get_profile
+  });
+
   const { data } = useQuery({
     queryKey: "category",
     queryFn: () => get_categories_by_name({})

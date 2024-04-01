@@ -7,6 +7,7 @@ import Window from "@/components/Window";
 import Channels from "@/components/Channels";
 import { CounterStoreProvider } from "@/providers/CountStorageProvider";
 import { CategoriesStorageProvider } from "@/providers/CategoriesStorageProvider";
+import { ProfileStorageProvider } from "@/providers/ProfileStorageProvider";
 
 const mandali = Mandali({
   subsets: ["latin"],
@@ -30,16 +31,19 @@ export default function RootLayout({
   return (
     <ReactClientQueryProvider>
       <html lang="en">
-        <CategoriesStorageProvider>
-          <CounterStoreProvider>
-            <body className={cn("h-screen max-w-[1980px] flex m-auto bg-my-gray-dark antialiased text-zinc-100", mandali.className)}>
-              <Window>
-                <Channels />
-              </Window>
-              {children}
-            </body>
-          </CounterStoreProvider>
-        </CategoriesStorageProvider>
+        <ProfileStorageProvider>
+          <CategoriesStorageProvider>
+            <CounterStoreProvider>
+              <body className={cn("h-screen max-w-[1980px] flex m-auto bg-my-gray-dark antialiased text-zinc-100", mandali.className)}>
+                <Window>
+                  <Channels />
+                </Window>
+                {children}
+              </body>
+            </CounterStoreProvider>
+          </CategoriesStorageProvider>
+        </ProfileStorageProvider>
+
       </html>
     </ReactClientQueryProvider >
   );

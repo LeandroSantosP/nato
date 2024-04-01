@@ -14,7 +14,6 @@ export const get_profile = (user_id: string) =>
   fetch(BASE_URL + `/profile?id=${user_id}`, {
     cache: "no-cache"
   }).then<UserProfile>(async (res) => {
-    await delay(10000);
     let profiles = await res.json();
     return profiles[0];
   });

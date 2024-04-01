@@ -21,14 +21,14 @@ export type ProfileStore = ProfileState & ProfileActions;
 
 export const createProfileStorage = (state: ProfileState) => {
 	return createStore<ProfileStore>((set, get) => ({
+		...state,
 		async signIn(email, password) {
 		},
 		async getProfileById(id) {
-			const data = await get_profile(id)
-			set((state) => {
-				state.profileData = data
-				return state;
-			})
+			console.log("test1");
+			const profileData = await get_profile(id);
+			console.log("CURENT:" + profileData);
+			set((state) => ({ profileData }))
 		},
 		async LogIn(email, password) {
 			return {
