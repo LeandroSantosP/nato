@@ -3,7 +3,7 @@ import VideoDesc from "./VideoDesc";
 
 export default function VideoStreamSection() {
   return (
-    <div className="w-full overflow-y-auto border-zinc-700 rounded-lg overflow-hidden bg-my-gray-dark border scrollbar-none">
+    <div className="w-full overflow-y-auto rounded-l-lg border-r-0 overflow-hidden border-zinc-700 bg-my-gray-dark border scrollbar-none">
       <video
         controls
         className="w-full"

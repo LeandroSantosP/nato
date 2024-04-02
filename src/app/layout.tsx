@@ -5,10 +5,7 @@ import { ReactClientQueryProvider } from "../components/ReactClientQueryProvider
 import { cn } from "@/lib/utils";
 import Window from "@/components/Window";
 import Channels from "@/components/Channels";
-import { CounterStoreProvider } from "@/providers/CountStorageProvider";
-import { CategoriesStorageProvider } from "@/providers/CategoriesStorageProvider";
-import { ProfileStorageProvider } from "@/providers/ProfileStorageProvider";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { QueryClient } from "@tanstack/react-query";
 
 const mandali = Mandali({
   subsets: ["latin"],
@@ -16,7 +13,6 @@ const mandali = Mandali({
   style: "normal",
   display: "swap"
 });
-
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -28,24 +24,22 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-
   const queryClient = new QueryClient();
   return (
     <html lang="en">
       <ReactClientQueryProvider>
-        <ProfileStorageProvider>
-          <CategoriesStorageProvider>
-            <CounterStoreProvider>
-              <body className={cn("h-screen max-w-[1980px] flex m-auto bg-my-gray-dark antialiased text-zinc-100", mandali.className)}>
-                <Window>
-                  <Channels />
-                </Window>
-                {children}
-              </body>
-            </CounterStoreProvider>
-          </CategoriesStorageProvider>
-        </ProfileStorageProvider>
-      </ReactClientQueryProvider >
+        <body
+          className={cn(
+            "h-screen max-w-[1980px] flex m-auto bg-my-gray-dark antialiased text-zinc-100",
+            mandali.className
+          )}
+        >
+          <Window>
+            <Channels />
+          </Window>
+          {children}
+        </body>
+      </ReactClientQueryProvider>
     </html>
   );
 }
