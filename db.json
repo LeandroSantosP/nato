@@ -2,28 +2,47 @@
 	"profile": [
 		{
 			"id": 1,
-			"username": "JohnDoe",
+			"login": "johnDoe_123",
 			"email": "joeDoe@gmail.com",
-			"avatarUrls": [
-				"https://i.imgur.com/yDG1S2F.png"
-			],
 			"roles": [
 				"USER",
 				"ADMIN"
 			],
-			"description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo nisi doloremque officiis rerum temporibus tempora"
+			"profile": {
+				"username": "JohnDoe",
+				"profile_url": "",
+				"profileUrl": "https://i.imgur.com/yDG1S2F.png",
+				"birthday": "2024-04-12T15:58:39.000Z",
+				"bio": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo nisi doloremque officiis rerum temporibus tempora",
+				"address": {
+					"country": "US",
+					"city": "Florida"
+				}
+			},
+			"createdAt": "2024-04-12T15:58:39.000Z",
+			"updatedAt": "2024-04-12T15:58:39.000Z"
 		},
 		{
 			"id": 2,
-			"username": "Maria",
+			"login": "maria_123",
 			"email": "joeDoe@gmail.com",
-			"avatarUrls": [
-				"https://i.imgur.com/a3a7lbR.png"
-			],
+			"createAt": "",
 			"roles": [
 				"USER"
 			],
-			"description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo nisi doloremque officiis rerum temporibus tempora"
+			"profile": {
+				"username": "Maria",
+				"profile_url": "",
+				"profileUrl": "https://i.imgur.com/a3a7lbR.png",
+				"birthday": "2024-04-12T15:58:39.000Z",
+				"bio": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo nisi doloremque officiis rerum temporibus tempora",
+				"address": {
+					"country": "BR",
+					"city": "Sao paulo"
+				}
+			},
+			"createdAt": "2024-04-12T15:58:39.000Z",
+			"updatedAt": "2024-04-12T15:58:39.000Z"
 		}
 	],
 	"categories": [

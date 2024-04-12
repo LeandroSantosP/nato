@@ -7,7 +7,7 @@ export default function VideoStreamSection() {
       <video
         controls
         className="w-full"
-        src="https://firebasestorage.googleapis.com/v0/b/nato-28ddf.appspot.com/o/video%2Fd4622fda-c8cf-41a6-ac22-27442bf1dd65.mp4?alt=media"
+        src="https://firebasestorage.googleapis.com/v0/b/nato-28ddf.appspot.com/o/video%2F4fee6141-ea27-46dd-86b6-d82f59f5b8ff.mp4?alt=media"
       />
       <VideoDesc />
     </div>

@@ -5,11 +5,21 @@ export const BASE_URL = "http://localhost:4545";
 
 export interface GetProfileOutput {
   id: number;
-  username: string;
+  login: string;
   email: string;
-  description: string;
   roles: string[];
-  avatarUrls: string[];
+  profile: {
+    username: string;
+    bio: string;
+    profileUrl: string;
+    birthday: Date;
+    address: {
+      country: string;
+      city: string;
+    };
+  };
+  createdAt: Date;
+  updated: Date;
 }
 
 export const get_profile_fake = (token: string = "1") =>

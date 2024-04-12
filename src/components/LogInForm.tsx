@@ -14,11 +14,12 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { useMutation, useQuery } from "react-query";
-import { signInFake } from "@/api/auth";
-import { useRouter } from "next/navigation";
+import { signIn, signInFake } from "@/api/auth";
 import { setCookie } from "@/utils/cookies";
 import ErrorFormMessage from "./ErroFormMessage";
 import { useQueryClient } from "react-query";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 const signInFilterSchema = z.object({
   email: z.string().email("Email format is not valid!"),
@@ -28,11 +29,14 @@ const signInFilterSchema = z.object({
 type SigInFilterSchema = z.infer<typeof signInFilterSchema>;
 
 export function LogInForm() {
+  const useRoute = useRouter();
+
+  const [open, setOpen] = useState(false);
   const useQuery = useQueryClient();
-  const { refresh } = useRouter();
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors }
   } = useForm<SigInFilterSchema>({
     resolver: zodResolver(signInFilterSchema)
@@ -48,15 +52,14 @@ export function LogInForm() {
     try {
       const { token } = await signInFn({ email, password });
       setCookie("token", token, 10);
-      alert("You logged with success!");
-      refresh();
-    } catch (error) {
-      alert("Erro on sign-in!");
-    }
+      setOpen(false);
+      useRoute.refresh();
+      reset();
+    } catch (error) {}
   }
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button className="p-2 rounded bg-primary text-zinc-100 shadow hover:bg-primary/90 border  text-sm font-medium w-full border-my-gray-01">
           Log In

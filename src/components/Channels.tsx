@@ -35,51 +35,50 @@ export default function Channels() {
   });
 
   function setSearchCategoryOnUrl(value: string) {
-    const params = new URLSearchParams(searchParams);
-    const current = params.get("category_name");
-
-    params.delete("video_title");
-    if (value) {
-      params.set("category_name", value);
-    } else {
-      params.delete("category_name");
-    }
+    const { searchParams } = new URL(window.location.toString());
+    const current = searchParams.get("category_name");
+    searchParams.delete("video_title");
+    searchParams.set("category_name", value);
     if (current == value) {
-      params.delete("category_name", value);
+      searchParams.delete("category_name", value);
     }
-    replace(`${pathname}?${params.toString()}`);
+    replace(`${pathname}?${searchParams.toString()}`);
   }
   const currentPage = usePathname();
   return (
     <section className="flex min-w-52 p-2 gap-2 flex-col h-full min-h-44 rounded-lg bg-zinc-950 border-my-gray-01 border">
       {isLoading ? (
         <SkeletonLoadingProfileHeader />
-      ) : profile ? (
-        <header className="flex justify-between p-2 gap-2 text-xs px-3 items-center border-[1px] border-my-gray-01 mb-3 rounded">
-          <h1 className="text-sm">Nato</h1>
-          <div className="flex items-center gap-2">
-            <p className="text-[0.7rem]">{profile.username}</p>
-            <Avatar className="size-7">
-              <AvatarImage src={profile.avatarUrls[0]} />
-              <AvatarFallback>CN</AvatarFallback>
-            </Avatar>
-          </div>
-        </header>
       ) : (
+        <>
+          {profile && (
+            <header className="flex justify-between p-2 gap-2 text-xs px-3 items-center border-[1px] border-my-gray-01 mb-3 rounded">
+              <h1 className="text-sm">Nato</h1>
+              <div className="flex items-center gap-2">
+                <p className="text-[0.7rem]">{profile?.profile.username}</p>
+                <Avatar className="size-7">
+                  <AvatarImage src={profile?.profile.profileUrl} />
+                  <AvatarFallback>CN</AvatarFallback>
+                </Avatar>
+              </div>
+            </header>
+          )}
+        </>
+      )}
+
+      {!profile && !isLoading && (
         <header className="flex flex-col justify-between p-2 gap-2 text-xs px-3 items-center border-[1px] border-my-gray-01 mb-3 rounded">
           <LogInForm />
           <SignUpForm />
         </header>
       )}
       <div className="flex flex-col gap-2">
-        {profile && (
-          <Link
-            href="/contents"
-            className="p-2 rounded bg-primary text-zinc-100 shadow hover:bg-primary/90 border  text-sm font-medium w-full border-my-gray-01"
-          >
-            Content
-          </Link>
-        )}
+        <Link
+          href="/contents"
+          className="p-2 rounded bg-primary text-zinc-100 shadow hover:bg-primary/90 border  text-sm font-medium w-full border-my-gray-01"
+        >
+          Content
+        </Link>
         <Link
           href="/live"
           className={`p-2 rounded bg-primary text-zinc-100 shadow hover:bg-primary/90 border text-sm font-medium w-full border-my-gray-01`}
@@ -87,12 +86,12 @@ export default function Channels() {
           Live
         </Link>
       </div>
-      {currentPage == "/contents" && (
+      {currentPage == "/contents" && categories && (
         <div className="flex flex-col gap-2">
           <h2 className={`font-bold border-b-[1px] border-zinc-700`}>
             Categories
           </h2>
-          {categories?.map((category) => {
+          {categories.map((category) => {
             return (
               <Button
                 onClick={() => setSearchCategoryOnUrl(category.name)}
