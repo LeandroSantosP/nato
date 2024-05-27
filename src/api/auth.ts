@@ -25,15 +25,17 @@ export async function signIn({ email, password }: SignInInput) {
 export interface SignUpInput {
   email: string;
   password: string;
-  username: string;
-  name: string;
+  login: string;
+  state: string;
+  country: string;
+  birthday: Date;
 }
 
-export async function signUp({ name, ...body }: SignUpInput) {
+export async function signUp({ ...body }: SignUpInput) {
   return await fetch("http://localhost:4545/auth/sign-up", {
     cache: "no-cache",
     method: "POST",
-    body: JSON.stringify(body),
+    body: JSON.stringify({ ...body, city: body.state }),
     headers: {
       "Content-Type": "application/json"
     }

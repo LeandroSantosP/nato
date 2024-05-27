@@ -1,6 +1,6 @@
 "use client";
 
-import { get_profile_fake } from "@/api/profile";
+import { get_profile } from "@/api/profile";
 import { getCookie } from "@/utils/cookies";
 import Image from "next/image";
 import Link from "next/link";
@@ -29,7 +29,7 @@ export function VideoCard({
       if (!token) {
         return;
       }
-      return get_profile_fake(token);
+      return get_profile(token);
     }
   });
   const isSubs = true;

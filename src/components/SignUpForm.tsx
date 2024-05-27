@@ -1,8 +1,6 @@
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger
@@ -10,7 +8,7 @@ import {
 import { Button } from "./ui/button";
 import { Label } from "./ui/label";
 import { Input } from "./ui/input";
-import { Code } from "lucide-react";
+import { Code, MapPin } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -19,31 +17,26 @@ import { useMutation } from "react-query";
 import { signUp } from "@/api/auth";
 import { UserAlreadyExits } from "@/errors/AuthErros";
 import { useState } from "react";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger
-} from "./ui/tooltip";
+import { getCountry, getState } from "@/utils/get-user-location";
 
 const SignUpFilterSchema = z.object({
-  email: z.string().email("Email format is not valid!"),
-  username: z
-    .string()
-    .min(5, "Required Field, must have at least 5 character(s)!"),
-  name: z
+  login: z
     .string()
     .min(5, "Required Field, must have at least 5 character(s)!")
     .transform((s) => {
       return s[0].toUpperCase() + s.slice(1, s.length);
     }),
+  birthday: z.string().transform((arg) => new Date(arg)),
+  email: z.string().email("Email format is not valid!"),
   password: z.string().min(10, "Password must be at least 10 character(s)!")
 });
 
 type SignUpFilterSchema = z.infer<typeof SignUpFilterSchema>;
-
 export function SignUpForm() {
   const [open, setOpen] = useState(false);
+  const country = getCountry();
+  const state = getState();
+
   const {
     register,
     handleSubmit,
@@ -67,13 +60,14 @@ export function SignUpForm() {
 
   async function handleSignUpForm(data: SignUpFilterSchema) {
     try {
-      await signUpFn({ ...data });
+      await signUpFn({ ...data, country, state });
       setOpen(false);
       reset();
     } catch (error) {
       return;
     }
   }
+
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
@@ -92,33 +86,20 @@ export function SignUpForm() {
           className="grid gap-4 py-4"
         >
           <div className="flex flex-col justify-center gap-2">
-            <Label htmlFor="name">Name: </Label>
+            <Label htmlFor="name">Login: </Label>
             <Input
-              {...register("name")}
+              {...register("login")}
               id="name"
               placeholder="Pedro Duarte"
               className="col-span-3"
             />
-            {errors.name?.message && (
+            {errors.login?.message && (
               <ErrorFormMessage
-                message={errors.name.message}
+                message={errors.login.message}
                 className=" w-full"
               />
             )}
           </div>
-          <div className="flex flex-col justify-center gap-2">
-            <Label htmlFor="username">Username</Label>
-            <Input
-              {...register("username")}
-              id="username"
-              placeholder="Pedro_Duarte123"
-              className="col-span-3"
-            />
-            {errors.username?.message && (
-              <ErrorFormMessage message={errors.username.message} />
-            )}
-          </div>
-
           <div className="flex flex-col justify-center gap-2">
             <Label htmlFor="email">Email</Label>
             <Input
@@ -143,6 +124,27 @@ export function SignUpForm() {
             {errors.password?.message && (
               <ErrorFormMessage message={errors.password.message} />
             )}
+          </div>
+          <div className="flex flex-col justify-center gap-2">
+            <Label htmlFor="birthday">BirthDay</Label>
+            <Input
+              {...register("birthday")}
+              type="date"
+              id="birthday"
+              placeholder="******"
+              className="col-span-3"
+            />
+            {errors.birthday?.message && (
+              <ErrorFormMessage message={errors.birthday.message} />
+            )}
+          </div>
+          <div className="flex flex-col justify-center gap-2">
+            <p className="flex text-center items-center gap-1">
+              <MapPin className="text-sm" />
+              <span className="text-sm italic text-gray-100 underline">
+                {country}, {state}
+              </span>
+            </p>
           </div>
           <Button
             type="submit"

@@ -13,7 +13,7 @@ import {
   Crown
 } from "lucide-react";
 import { useQuery } from "react-query";
-import { get_profile_fake } from "@/api/profile";
+import { get_profile } from "@/api/profile";
 import { getCookie } from "@/utils/cookies";
 import ProfileScreenLoad from "@/components/skeletons/ProfileScreenLoad";
 import EditProfileForm from "@/components/EditProfileForm";
@@ -27,7 +27,10 @@ export default function Profile(props: { params: { login: string } }) {
   const { data: user, isLoading } = useQuery({
     queryKey: ["profile"],
     queryFn: () => {
-      return get_profile_fake();
+      if (!token) {
+        return;
+      }
+      return get_profile(token);
     }
   });
   const profile = user?.profile;

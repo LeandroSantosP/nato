@@ -1,8 +1,78 @@
+"use client";
+
 import { ArrowDown, SendHorizontal, X } from "lucide-react";
 import { AvatarImage, Avatar, AvatarFallback } from "./ui/avatar";
-import { messages } from "../lib/messages";
+import SockJS from "sockjs-client";
+import Stomp from "stompjs";
+import { getCookie } from "@/utils/cookies";
+import { useQuery } from "react-query";
+import { get_profile } from "@/api/profile";
+import { useEffect, useState } from "react";
 
+type MessageType = "JOIN" | "CHAT" | "LEAVE";
+
+type MessagePayload = {
+  author: string;
+  body: string;
+  messageType: MessageType;
+};
+
+let stompClient: Stomp.Client | null = null;
 export default function Chat() {
+  const token = getCookie("token");
+  const [publicMessages, setPublicMessages] = useState<MessagePayload[]>([]);
+  console.log(token);
+  const { data: profile, isLoading } = useQuery({
+    queryKey: ["profile", token],
+    queryFn: () => {
+      if (!token) {
+        return;
+      }
+      return get_profile(token);
+    },
+    onSuccess() {
+      wsConnection();
+    }
+  });
+
+  const wsConnection = () => {
+    const socket = new SockJS("http://localhost:4545/conect");
+    stompClient = Stomp.over(socket);
+    stompClient.connect({}, onConnected, onError);
+  };
+
+  const onConnected = (frame: Stomp.Frame | undefined) => {
+    if (!frame) {
+      return;
+    }
+    if (stompClient && profile && frame.body.trim()) {
+      stompClient.subscribe("/topic/public", onMessageReceived);
+      const message: MessagePayload = {
+        author: profile.login,
+        body: "John Doe Entry in the chat!",
+        messageType: "JOIN"
+      };
+      stompClient.send("/app/chat.addUser", {}, JSON.stringify(message));
+    }
+  };
+
+  const onMessageReceived = (message: Stomp.Message) => {
+    const messageBody: MessagePayload = JSON.parse(message.body);
+    switch (messageBody.messageType) {
+      case "JOIN":
+        publicMessages.push(messageBody);
+        setPublicMessages([...publicMessages]);
+        break;
+      case "CHAT":
+        publicMessages.push(messageBody);
+        setPublicMessages([...publicMessages]);
+    }
+  };
+
+  const onError = (frame: String | Stomp.Frame) => {
+    console.log("Something Going Wrong Ws: " + frame);
+  };
+
   return (
     <section className="flex max-w-80 overflow-hidden flex-col rounded-r-lg w-[36rem] border-r-0 border border-my-gray-01 ">
       <button className="absolute  text-emerald-400 top-[1/2] right-2">
@@ -15,7 +85,7 @@ export default function Chat() {
         </p>
       </div>
       <div className="flex flex-col flex-1 p-2 gap-3 overflow-auto scrollbar-none">
-        {messages.map((item, i) => {
+        {publicMessages.map((item, i) => {
           return (
             <div className="text-sm flex items-center gap-2" key={i}>
               <Avatar className="size-5 self-start">
@@ -25,9 +95,9 @@ export default function Chat() {
               <div className="flex flex-col">
                 <p className="text-zinc-200 break-all">
                   <span className="text-zinc-400 text-nowrap font-semibold">
-                    {item.name}:{" "}
+                    {item.author}:{" "}
                   </span>
-                  {item.message}
+                  {item.body}
                 </p>
               </div>
             </div>

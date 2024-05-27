@@ -5,10 +5,10 @@ import {
   ArrowRight,
   LogOut,
   ShieldEllipsis,
-  User
+  User,
 } from "lucide-react";
 import { useQuery } from "react-query";
-import { get_profile_fake } from "@/api/profile";
+import { get_profile } from "@/api/profile";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 
@@ -21,8 +21,8 @@ export function SideBarNav({ setShowMenu, showMenu }: any) {
       if (!token) {
         return;
       }
-      return get_profile_fake(token);
-    }
+      return get_profile(token);
+    },
   });
   function logOut() {
     setCookie("token", "", 0);

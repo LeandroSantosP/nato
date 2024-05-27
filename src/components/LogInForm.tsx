@@ -13,8 +13,8 @@ import { Input } from "./ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
-import { useMutation, useQuery } from "react-query";
-import { signIn, signInFake } from "@/api/auth";
+import { useMutation } from "react-query";
+import { signInFake } from "@/api/auth";
 import { setCookie } from "@/utils/cookies";
 import ErrorFormMessage from "./ErroFormMessage";
 import { useQueryClient } from "react-query";
@@ -30,7 +30,6 @@ type SigInFilterSchema = z.infer<typeof signInFilterSchema>;
 
 export function LogInForm() {
   const useRoute = useRouter();
-
   const [open, setOpen] = useState(false);
   const useQuery = useQueryClient();
   const {

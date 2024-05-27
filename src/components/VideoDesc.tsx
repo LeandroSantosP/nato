@@ -1,18 +1,23 @@
 "use client";
 
-import { get_profile, get_profile_fake } from "../api/profile";
+import { get_profile } from "../api/profile";
 import VideoNav from "./VideoNav";
 import ViewsAmount from "./ViewsAmount";
 import FollowButton from "./FollowButton";
 import { useQuery } from "react-query";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import SkeletonVideoDesc from "./skeletons/SkeletonVideoDesc";
+import { getCookie } from "@/utils/cookies";
 
 export default function VideoDesc() {
+  const token = getCookie("token");
   const { data: profile, isLoading } = useQuery({
     queryKey: ["profile"],
     queryFn: () => {
-      return get_profile_fake();
+      if (!token) {
+        return;
+      }
+      return get_profile(token);
     }
   });
 

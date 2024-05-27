@@ -5,7 +5,6 @@ import { ReactClientQueryProvider } from "../components/ReactClientQueryProvider
 import { cn } from "@/lib/utils";
 import Window from "@/components/Window";
 import Channels from "@/components/Channels";
-import { QueryClient } from "@tanstack/react-query";
 
 const mandali = Mandali({
   subsets: ["latin"],
@@ -24,7 +23,6 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const queryClient = new QueryClient();
   return (
     <html lang="en">
       <ReactClientQueryProvider>

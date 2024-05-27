@@ -9,7 +9,7 @@ import { AvatarFallback, AvatarImage, Avatar } from "./ui/avatar";
 import { Button } from "./ui/button";
 import { LogInForm } from "./LogInForm";
 import { SignUpForm } from "./SignUpForm";
-import { get_profile_fake } from "@/api/profile";
+import { get_profile } from "@/api/profile";
 import { getCookie } from "@/utils/cookies";
 import SkeletonLoadingProfileHeader from "./skeletons/SkeletonLoadingProfileHeader";
 
@@ -25,7 +25,7 @@ export default function Channels() {
       if (!token) {
         return;
       }
-      return get_profile_fake(token);
+      return get_profile(token);
     }
   });
 
