@@ -57,7 +57,9 @@ export default function Channels() {
               <div className="flex items-center gap-2">
                 <p className="text-[0.7rem]">{profile?.profile.username}</p>
                 <Avatar className="size-7">
-                  <AvatarImage src={profile?.profile.profileUrl} />
+                  <AvatarImage
+                    src={profile?.profile.userPictures[0].downloadUri}
+                  />
                   <AvatarFallback>CN</AvatarFallback>
                 </Avatar>
               </div>

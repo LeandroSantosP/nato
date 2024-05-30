@@ -5,7 +5,7 @@ import {
   ArrowRight,
   LogOut,
   ShieldEllipsis,
-  User,
+  User
 } from "lucide-react";
 import { useQuery } from "react-query";
 import { get_profile } from "@/api/profile";
@@ -22,7 +22,7 @@ export function SideBarNav({ setShowMenu, showMenu }: any) {
         return;
       }
       return get_profile(token);
-    },
+    }
   });
   function logOut() {
     setCookie("token", "", 0);
@@ -42,7 +42,7 @@ export function SideBarNav({ setShowMenu, showMenu }: any) {
             <ArrowRight className="size-5" />
           )}
         </Button>
-        {!isLoading && profile?.roles.includes("ADMIN") && (
+        {!isLoading && profile?.roles.includes("USER") && (
           <>
             <Link
               href={`/profile/${profile?.login}`}

@@ -34,7 +34,7 @@ export default function VideoDesc() {
           </h3>
           <div className="flex items-center gap-2 rounded">
             <Avatar>
-              <AvatarImage src={profile?.profile.profileUrl} />
+              <AvatarImage src={profile?.profile.userPictures[0].downloadUri} />
               <AvatarFallback>CN</AvatarFallback>
             </Avatar>
             <p className="text-[16px]">{profile.profile.username}</p>
@@ -46,7 +46,7 @@ export default function VideoDesc() {
           <ViewsAmount btSize={30} />
         </div>
       </section>
-      <VideoNav home={{ description: profile.profile.bio }} />
+      <VideoNav home={{ description: profile.profile.bio || "" }} />
     </div>
   );
 }

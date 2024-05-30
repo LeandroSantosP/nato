@@ -14,7 +14,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { useMutation } from "react-query";
-import { signInFake } from "@/api/auth";
+import { signIn, signInFake } from "@/api/auth";
 import { setCookie } from "@/utils/cookies";
 import ErrorFormMessage from "./ErroFormMessage";
 import { useQueryClient } from "react-query";
@@ -41,7 +41,7 @@ export function LogInForm() {
     resolver: zodResolver(signInFilterSchema)
   });
   const { isLoading, mutateAsync: signInFn } = useMutation({
-    mutationFn: signInFake,
+    mutationFn: signIn,
     onSuccess(data, variables, context) {
       useQuery.invalidateQueries("profile");
     }

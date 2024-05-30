@@ -33,6 +33,7 @@ export default function Profile(props: { params: { login: string } }) {
       return get_profile(token);
     }
   });
+
   const profile = user?.profile;
 
   // => send user_login => if profile is mine based on token show the edit button.
@@ -46,7 +47,7 @@ export default function Profile(props: { params: { login: string } }) {
             <div className="flex relative p-5 border border-my-gray-01 justify-center max-h-72 h-full gap-5 px-10">
               <EditProfileForm />
               <Avatar className="size-40 ">
-                <AvatarImage src={profile?.profileUrl} />
+                <AvatarImage src={profile?.userPictures[0].downloadUri} />
                 <AvatarFallback>CN</AvatarFallback>
               </Avatar>
               <div className="flex flex-col gap-2 w-full ">
@@ -64,7 +65,7 @@ export default function Profile(props: { params: { login: string } }) {
                     <span className="flex items-center gap-1.5">
                       <MapPin className="size-4 text-white" />
                       <p>
-                        {profile?.address.country} {profile?.address.city}
+                        {profile?.country} {profile?.city}
                       </p>
                     </span>
                     <span className="flex items-center">
@@ -76,7 +77,7 @@ export default function Profile(props: { params: { login: string } }) {
                     </span>
                     <span className="flex items-center gap-1.5">
                       <CalendarDays className="size-4 text-white" />
-                      Joined {dayJs(user?.createdAt).format("MMMM YYYY")}
+                      Joined {dayJs(profile?.createdAt).format("MMMM YYYY")}
                     </span>
                   </div>
                 </div>

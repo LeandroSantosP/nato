@@ -21,7 +21,6 @@ let stompClient: Stomp.Client | null = null;
 export default function Chat() {
   const token = getCookie("token");
   const [publicMessages, setPublicMessages] = useState<MessagePayload[]>([]);
-  console.log(token);
   const { data: profile, isLoading } = useQuery({
     queryKey: ["profile", token],
     queryFn: () => {
@@ -31,7 +30,7 @@ export default function Chat() {
       return get_profile(token);
     },
     onSuccess() {
-      wsConnection();
+      // wsConnection();
     }
   });
 
@@ -48,7 +47,7 @@ export default function Chat() {
     if (stompClient && profile && frame.body.trim()) {
       stompClient.subscribe("/topic/public", onMessageReceived);
       const message: MessagePayload = {
-        author: profile.login,
+        author: profile.profile.username,
         body: "John Doe Entry in the chat!",
         messageType: "JOIN"
       };

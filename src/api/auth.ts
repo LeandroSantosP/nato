@@ -17,7 +17,6 @@ export async function signIn({ email, password }: SignInInput) {
       const data = await response.json();
       throw new Error(data.message);
     }
-
     return await response.json();
   });
 }
