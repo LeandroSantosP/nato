@@ -131,7 +131,6 @@ export function SignUpForm() {
               {...register("birthday")}
               type="date"
               id="birthday"
-              placeholder="******"
               className="col-span-3"
             />
             {errors.birthday?.message && (

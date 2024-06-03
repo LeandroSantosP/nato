@@ -58,7 +58,7 @@ export default function Channels() {
                 <p className="text-[0.7rem]">{profile?.profile.username}</p>
                 <Avatar className="size-7">
                   <AvatarImage
-                    src={profile?.profile.userPictures[0].downloadUri}
+                    src={profile?.profile.userPictures[0]?.downloadUri}
                   />
                   <AvatarFallback>CN</AvatarFallback>
                 </Avatar>

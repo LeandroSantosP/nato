@@ -11,6 +11,7 @@ import { useQuery } from "react-query";
 import { get_profile } from "@/api/profile";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { SourceTextModule } from "vm";
 
 export function SideBarNav({ setShowMenu, showMenu }: any) {
   const useRoute = useRouter();
