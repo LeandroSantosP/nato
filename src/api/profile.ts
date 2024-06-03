@@ -20,7 +20,7 @@ interface GetProfileIn {
     username: string;
     bio?: string;
     bannerUrl?: string;
-    userPictures: { downloadUri: string }[];
+    userPictures: string[];
     birthday: Date;
     country: string;
     city: string;

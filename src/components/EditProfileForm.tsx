@@ -12,9 +12,48 @@ import { Input } from "./ui/input";
 import { useQuery } from "react-query";
 import { getCookie } from "@/utils/cookies";
 import { get_profile } from "@/api/profile";
-import { use } from "react";
+import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { useState } from "react";
 
+const MAX_FILE_SIZE = 5000000;
+const ACCEPTED_IMAGE_TYPES = [
+  "image/jpeg",
+  "image/jpg",
+  "image/png",
+  "image/webp"
+];
+
+const UpdateProfileSchema = z.object({
+  username: z
+    .string()
+    .min(5, "Required Field, must have at least 5 character(s)!")
+    .transform((s) => {
+      return s[0].toUpperCase() + s.slice(1, s.length);
+    }),
+  avatar: z
+    .any()
+    .refine((file) => file?.size <= MAX_FILE_SIZE, `Max image size is 5MB.`)
+    .refine(
+      (file) => ACCEPTED_IMAGE_TYPES.includes(file?.type),
+      "Only .jpg, .jpeg, .png and .webp formats are supported."
+    ),
+  bio: z
+    .string()
+    .max(
+      200,
+      "Required Field, this field must not be longer than 200 characters!"
+    )
+    .transform((s) => {
+      return s[0].toUpperCase() + s.slice(1, s.length);
+    }),
+  birthday: z.string().transform((arg) => new Date(arg))
+});
+type UpdateProfileSchema = z.infer<typeof UpdateProfileSchema>;
 export default function EditProfileForm() {
+  const { register, handleSubmit, reset } = useForm<UpdateProfileSchema>({});
+
   const token = getCookie("token");
   const { data: user, isLoading } = useQuery({
     queryKey: ["profile"],
@@ -25,6 +64,20 @@ export default function EditProfileForm() {
       return get_profile(token);
     }
   });
+  const [preview, setPreview] = useState(user?.profile.userPictures[0]);
+
+  const handleUploadedFile = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      const urlImage = URL.createObjectURL(file);
+      setPreview(urlImage);
+    }
+  };
+
+  async function handleUploadProfile(data: UpdateProfileSchema) {
+    const s = data.avatar as FileList;
+    console.log(s[0].name);
+  }
 
   return (
     <Dialog>
@@ -34,7 +87,10 @@ export default function EditProfileForm() {
         </button>
       </DialogTrigger>
       <DialogContent className="bg-my-gray-dark border border-my-gray-01">
-        <form className="flex flex-col gap-2">
+        <form
+          className="flex flex-col gap-2"
+          onSubmit={handleSubmit(handleUploadProfile)}
+        >
           <div className="flex justify-between items-center px-5">
             <DialogTitle>Edit Profile!</DialogTitle>
             <Button
@@ -45,11 +101,31 @@ export default function EditProfileForm() {
               Save
             </Button>
           </div>
+
+          <div className="flex items-center gap-4 justify-center">
+            <Avatar className="size-16">
+              <AvatarImage src={preview} />
+              <AvatarFallback>CN</AvatarFallback>
+            </Avatar>
+            <input
+              {...register("avatar")}
+              onChange={handleUploadedFile}
+              id="avatar"
+              type="file"
+              className="block w-full text-sm text-zinc-500
+        file:mr-4 file:py-2 file:px-4
+        file:rounded-full file:border-0
+        file:text-sm file:font-semibold
+        file:bg-violet-50 file:text-emerald-500
+        hover:file:bg-violet-100
+      "
+            />
+          </div>
           <div className="flex flex-col space-y-1">
             <Label htmlFor="username">Username</Label>
             <Input
+              {...register("username")}
               disabled={isLoading}
-              type="username"
               id="username"
               defaultValue={user?.profile.username}
             />
@@ -57,6 +133,7 @@ export default function EditProfileForm() {
           <div className="flex flex-col space-y-1">
             <Label htmlFor="birthday">BirthDay</Label>
             <Input
+              {...register("birthday")}
               type="date"
               id="birthday"
               defaultValue={user?.profile.birthday.toString() || ""}
@@ -64,7 +141,11 @@ export default function EditProfileForm() {
           </div>
           <div className="flex flex-col space-y-1">
             <Label htmlFor="password">Bio</Label>
-            <Textarea id="bio" defaultValue={user?.profile.bio} />
+            <Textarea
+              {...register("bio")}
+              id="bio"
+              defaultValue={user?.profile.bio}
+            />
           </div>
         </form>
       </DialogContent>

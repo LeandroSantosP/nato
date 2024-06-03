@@ -47,7 +47,7 @@ export default function Profile(props: { params: { login: string } }) {
             <div className="flex relative p-5 border border-my-gray-01 justify-center max-h-72 h-full gap-5 px-10">
               <EditProfileForm />
               <Avatar className="size-40 ">
-                <AvatarImage src={profile?.userPictures[0]?.downloadUri} />
+                <AvatarImage src={profile?.userPictures[0]} />
                 <AvatarFallback>CN</AvatarFallback>
               </Avatar>
               <div className="flex flex-col gap-2 w-full ">

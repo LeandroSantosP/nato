@@ -34,7 +34,7 @@ export default function VideoDesc() {
           </h3>
           <div className="flex items-center gap-2 rounded">
             <Avatar>
-              <AvatarImage src={profile?.profile.userPictures[0].downloadUri} />
+              <AvatarImage src={profile?.profile.userPictures[0]} />
               <AvatarFallback>CN</AvatarFallback>
             </Avatar>
             <p className="text-[16px]">{profile.profile.username}</p>

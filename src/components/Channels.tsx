@@ -28,7 +28,6 @@ export default function Channels() {
       return get_profile(token);
     }
   });
-
   const { data: categories } = useQuery({
     queryKey: "category",
     queryFn: () => get_categories_by_name({})
@@ -57,9 +56,7 @@ export default function Channels() {
               <div className="flex items-center gap-2">
                 <p className="text-[0.7rem]">{profile?.profile.username}</p>
                 <Avatar className="size-7">
-                  <AvatarImage
-                    src={profile?.profile.userPictures[0]?.downloadUri}
-                  />
+                  <AvatarImage src={profile?.profile.userPictures[0]} />
                   <AvatarFallback>CN</AvatarFallback>
                 </Avatar>
               </div>

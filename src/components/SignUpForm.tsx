@@ -32,6 +32,7 @@ const SignUpFilterSchema = z.object({
 });
 
 type SignUpFilterSchema = z.infer<typeof SignUpFilterSchema>;
+
 export function SignUpForm() {
   const [open, setOpen] = useState(false);
   const country = getCountry();
