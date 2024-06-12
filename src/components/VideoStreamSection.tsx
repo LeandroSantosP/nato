@@ -1,4 +1,3 @@
-import { Suspense } from "react";
 import VideoDesc from "./VideoDesc";
 
 export default function VideoStreamSection() {

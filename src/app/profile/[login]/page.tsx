@@ -44,14 +44,14 @@ export default function Profile(props: { params: { login: string } }) {
       ) : (
         <>
           <div className="flex w-[80%] items-center justify-center flex-col">
-            <div className="flex relative p-5 border border-my-gray-01 justify-center max-h-72 h-full gap-5 px-10">
+            <div className="flex relative p-5 border border-my-gray-01 justify-center h-full gap-5 px-10">
               <EditProfileForm />
               <Avatar className="size-40 ">
                 <AvatarImage src={profile?.userPictures[0]} />
                 <AvatarFallback>CN</AvatarFallback>
               </Avatar>
-              <div className="flex flex-col gap-2 w-full ">
-                <div className="flex text-[12px] flex-col gap-1 flex-1 mt-5">
+              <div className="flex flex-col gap-2 w-full">
+                <div className="flex text-[12px] flex-col gap-1 flex-1">
                   <div>
                     <h1 className="flex items-center text-2xl font-bold gap-2">
                       {profile?.username}!{" "}
@@ -68,9 +68,6 @@ export default function Profile(props: { params: { login: string } }) {
                         {profile?.country} {profile?.city}
                       </p>
                     </span>
-                    <span className="flex items-center">
-                      <p>Sr. Web Developer</p>
-                    </span>
                     <span className="flex items-center gap-1.5">
                       <Gift className="size-4 text-white" />
                       Born {dayJs(profile?.birthday).format("MMMM DD, YYYY")}
@@ -81,7 +78,7 @@ export default function Profile(props: { params: { login: string } }) {
                     </span>
                   </div>
                 </div>
-                <div className="flex bg-my-gray-light-one border border-my-gray-01 rounded-lg  min-h-20 items-center">
+                <div className="flex bg-my-gray-light-one border border-my-gray-01 rounded-lg min-h-20 items-center">
                   <Button className="w-full rounded-none border border-my-gray-01 h-full">
                     Following {"1233"}
                   </Button>

@@ -1,6 +1,3 @@
-import e from "express";
-import { use } from "react";
-
 export const BASE_URL_J_SERVER = "http://localhost:4000";
 export const BASE_URL = "http://localhost:4545";
 
@@ -65,6 +62,32 @@ export const get_profile = async (token: string): Promise<ProfileOutput> => {
     throw new Error("Error on get User!");
   }
 };
+
+export async function updatedAvatar({
+  avatar,
+  token
+}: {
+  token: string;
+  avatar: File;
+}) {
+  const formData = new FormData();
+  formData.append("image", avatar);
+  try {
+    const responseProfileData = await fetch(
+      BASE_URL + "/profile/private/add-picture",
+      {
+        method: "PATCH",
+        body: formData,
+        headers: {
+          Authorization: "Bearer " + token
+        }
+      }
+    );
+    console.log(responseProfileData.ok);
+  } catch (error) {
+    console.log(error);
+  }
+}
 
 /* Public */
 

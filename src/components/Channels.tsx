@@ -51,15 +51,11 @@ export default function Channels() {
       ) : (
         <>
           {profile && (
-            <header className="flex justify-between p-2 gap-2 text-xs px-3 items-center border-[1px] border-my-gray-01 mb-3 rounded">
-              <h1 className="text-sm">Nato</h1>
-              <div className="flex items-center gap-2">
-                <p className="text-[0.7rem]">{profile?.profile.username}</p>
-                <Avatar className="size-7">
-                  <AvatarImage src={profile?.profile.userPictures[0]} />
-                  <AvatarFallback>CN</AvatarFallback>
-                </Avatar>
-              </div>
+            <header className="flex justify-center p-2 gap-2 text-xs px-3 items-center border-[1px] border-my-gray-01 mb-3 rounded">
+              <Avatar className="size-20">
+                <AvatarImage src={profile?.profile.userPictures[0]} />
+                <AvatarFallback>CN</AvatarFallback>
+              </Avatar>
             </header>
           )}
         </>
