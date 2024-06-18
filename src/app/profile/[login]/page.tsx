@@ -35,7 +35,6 @@ export default function Profile(props: { params: { login: string } }) {
   });
 
   const profile = user?.profile;
-
   // => send user_login => if profile is mine based on token show the edit button.
   return (
     <div className="flex bg-zinc-900 rounded-lg m-5 w-full">

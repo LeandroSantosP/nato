@@ -5,7 +5,10 @@ export interface SignInInput {
   password: string;
 }
 
-export async function signIn({ email, password }: SignInInput) {
+export async function signIn({
+  email,
+  password
+}: SignInInput): Promise<{ token: string }> {
   return await fetch("http://localhost:4545/auth/sign-in", {
     cache: "no-cache",
     method: "POST",

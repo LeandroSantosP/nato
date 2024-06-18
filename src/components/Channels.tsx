@@ -10,12 +10,12 @@ import { Button } from "./ui/button";
 import { LogInForm } from "./LogInForm";
 import { SignUpForm } from "./SignUpForm";
 import { get_profile } from "@/api/profile";
-import { getCookie } from "@/utils/cookies";
+import { getCookie, setCookie } from "@/utils/cookies";
 import SkeletonLoadingProfileHeader from "./skeletons/SkeletonLoadingProfileHeader";
 
 export default function Channels() {
   const searchParams = useSearchParams();
-  const { replace } = useRouter();
+  const { replace, refresh } = useRouter();
   const pathname = usePathname();
   const token = getCookie("token");
 
@@ -26,8 +26,13 @@ export default function Channels() {
         return;
       }
       return get_profile(token);
+    },
+    onError(err) {
+      setCookie("token", "", 0);
+      refresh();
     }
   });
+
   const { data: categories } = useQuery({
     queryKey: "category",
     queryFn: () => get_categories_by_name({})

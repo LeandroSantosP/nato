@@ -58,7 +58,6 @@ export const get_profile = async (token: string): Promise<ProfileOutput> => {
 
     return { ...userData, profile: { ...profileData } };
   } catch (error) {
-    console.log("HERE: " + error);
     throw new Error("Error on get User!");
   }
 };
@@ -72,21 +71,33 @@ export async function updatedAvatar({
 }) {
   const formData = new FormData();
   formData.append("image", avatar);
-  try {
-    const responseProfileData = await fetch(
-      BASE_URL + "/profile/private/add-picture",
-      {
-        method: "PATCH",
-        body: formData,
-        headers: {
-          Authorization: "Bearer " + token
-        }
-      }
-    );
-    console.log(responseProfileData.ok);
-  } catch (error) {
-    console.log(error);
-  }
+  await fetch(BASE_URL + "/profile/private/add-picture", {
+    method: "PATCH",
+    body: formData,
+    headers: {
+      Authorization: "Bearer " + token
+    }
+  });
+}
+
+export async function updateUserProfile({
+  token,
+  ...input
+}: {
+  bio: string;
+  username: string;
+  birthday: Date;
+  token: string;
+}) {
+  await fetch(BASE_URL + "/profile/private/update", {
+    method: "PUT",
+    body: JSON.stringify(input),
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + token
+    }
+  });
+  return;
 }
 
 /* Public */

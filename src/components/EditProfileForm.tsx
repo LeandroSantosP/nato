@@ -11,7 +11,7 @@ import { Label } from "./ui/label";
 import { Input } from "./ui/input";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { getCookie } from "@/utils/cookies";
-import { get_profile, updatedAvatar } from "@/api/profile";
+import { get_profile, updatedAvatar, updateUserProfile } from "@/api/profile";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -54,7 +54,17 @@ const UpdateProfileSchema = z.object({
     .transform((s) => {
       return s[0]?.toUpperCase() + s.slice(1, s.length);
     }),
-  birthday: z.string().transform((arg) => new Date(arg))
+  birthday: z
+    .string()
+    .transform((arg) => new Date(arg))
+    .refine(
+      (date) => {
+        let today = new Date();
+        today.setFullYear(today.getFullYear() - 16);
+        return date < today;
+      },
+      { message: "User must be over 16 year old!" }
+    )
 });
 type UpdateProfileSchema = z.infer<typeof UpdateProfileSchema>;
 export default function EditProfileForm() {
@@ -81,8 +91,6 @@ export default function EditProfileForm() {
 
   const handleUploadedFile = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
-    console.log(file?.size);
-
     if (file) {
       const urlImage = URL.createObjectURL(file);
       setPreview(urlImage);
@@ -97,11 +105,13 @@ export default function EditProfileForm() {
       }
     });
 
-  async function handleUploadProfile(data: UpdateProfileSchema) {
-    const avatarFile = data.avatar as FileList;
-    if (avatarFile.length > 0 && token) {
+  async function handleUploadProfile({ avatar, ...data }: UpdateProfileSchema) {
+    const avatarFile = avatar as FileList;
+    if (!token) return;
+    if (avatarFile.length > 0) {
       await updatedAvatarFn({ token, avatar: avatarFile[0] });
     }
+    await updateUserProfile({ ...data, token });
   }
 
   return (
@@ -119,7 +129,7 @@ export default function EditProfileForm() {
           <div className="flex justify-between items-center px-5">
             <DialogTitle>Edit Profile!</DialogTitle>
             <Button
-              disabled={isLoading}
+              disabled={isLoading || isLoadingAvatar}
               type="submit"
               className="hover:brightness-110 hover:bg-emerald-500/20"
             >
@@ -153,7 +163,7 @@ export default function EditProfileForm() {
             <Label htmlFor="username">Username</Label>
             <Input
               {...register("username")}
-              disabled={isLoading}
+              disabled={isLoading || isLoadingAvatar}
               id="username"
               defaultValue={user?.profile.username}
             />
@@ -167,6 +177,7 @@ export default function EditProfileForm() {
               {...register("birthday")}
               type="date"
               id="birthday"
+              disabled={isLoading || isLoadingAvatar}
               defaultValue={user?.profile.birthday.toString() || ""}
             />
             {errors.birthday?.message && (
@@ -178,6 +189,7 @@ export default function EditProfileForm() {
             <Textarea
               {...register("bio")}
               id="bio"
+              disabled={isLoading || isLoadingAvatar}
               defaultValue={user?.profile.bio}
             />
             {errors.bio?.message && (
